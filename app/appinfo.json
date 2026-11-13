@@ -1,0 +1,12 @@
+{
+  "id": "com.niah.xboxlinklg",
+  "version": "0.1.0",
+  "vendor": "XboxLink-LG",
+  "type": "web",
+  "main": "index.html",
+  "title": "XboxLink",
+  "icon": "icon.png",
+  "largeIcon": "icon.png",
+  "requiredMemory": 64,
+  "resolution": "1920x1080"
+}
