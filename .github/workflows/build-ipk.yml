@@ -62,7 +62,9 @@ jobs:
                       rebuilt.addfile(member, original.extractfile(member) if member.isfile() else None)
               os.replace(temporary, source)
           PY
-          ar r "../$IPK" debian-binary control.tar.gz data.tar.gz
+          # Disable deterministic mode so the outer ar headers get real timestamps.
+          ar rU "../$IPK" debian-binary control.tar.gz data.tar.gz
+          ar tv "../$IPK"
       - uses: actions/upload-artifact@v4
         with:
           name: XboxLink-LG-IPK
