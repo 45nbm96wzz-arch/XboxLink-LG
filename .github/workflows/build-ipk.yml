@@ -38,6 +38,31 @@ jobs:
         run: |
           mkdir -p dist
           ares-package -o dist app
+      - name: Fix IPK timestamps for older webOS
+        run: |
+          set -e
+          IPK="$(find dist -maxdepth 1 -name '*.ipk' -print -quit)"
+          test -n "$IPK"
+          mkdir -p ipk-work
+          cd ipk-work
+          ar x "../$IPK"
+          python3 - <<'PY'
+          import os
+          import tarfile
+          for name in ("control", "data"):
+              source = name + ".tar.gz"
+              temporary = source + ".new"
+              with tarfile.open(source, "r:gz") as original, tarfile.open(temporary, "w:gz") as rebuilt:
+                  for member in original.getmembers():
+                      member.mtime = 1700000000
+                      member.uid = 0
+                      member.gid = 0
+                      member.uname = ""
+                      member.gname = ""
+                      rebuilt.addfile(member, original.extractfile(member) if member.isfile() else None)
+              os.replace(temporary, source)
+          PY
+          ar r "../$IPK" debian-binary control.tar.gz data.tar.gz
       - uses: actions/upload-artifact@v4
         with:
           name: XboxLink-LG-IPK
