@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>XboxLink</title>
+<style>
+  *{box-sizing:border-box}
+  body{margin:0;background:#07120c;color:#fff;font-family:Arial,sans-serif;min-height:100vh}
+  main{max-width:1100px;margin:0 auto;padding:6vh 6vw}
+  .brand{color:#8ee68e;font-size:20px;font-weight:bold;letter-spacing:3px}
+  h1{font-size:clamp(42px,7vw,76px);margin:22px 0 12px}
+  p{font-size:24px;line-height:1.45;color:#d5e2d7;max-width:850px}
+  .panel{margin-top:34px;padding:28px;border:1px solid #31513a;border-radius:18px;background:#102219}
+  button{font-size:27px;font-weight:bold;color:#07120c;background:#8ee68e;border:0;border-radius:12px;padding:20px 34px;min-width:330px;cursor:pointer}
+  button:focus{outline:4px solid white;outline-offset:5px}
+  .small{font-size:17px;color:#a9b9ac;margin-top:26px}
+  #status{font-size:20px;color:#ffe39a;margin-top:20px;min-height:28px}
+  ul{font-size:21px;line-height:1.8;color:#d5e2d7}
+</style>
+</head>
+<body>
+<main>
+  <div class="brand">XBOXLINK · EXPERIMENTAL</div>
+  <h1>Play your Xbox on this TV</h1>
+  <p>This experimental app tries to open Xbox Remote Play directly on your LG TV. It does not install anything on your Xbox and it never asks for your Microsoft password inside this app.</p>
+  <section class="panel">
+    <button id="start" tabindex="0">OPEN XBOX REMOTE PLAY</button>
+    <div id="status" role="status">Ready. Your Xbox must be on or set to sleep mode with Remote features enabled.</div>
+  </section>
+  <h2>Before you start</h2>
+  <ul>
+    <li>Sign in with the Microsoft account linked to your Xbox.</li>
+    <li>Keep the TV and Xbox connected to the internet.</li>
+    <li>Use your Xbox controller paired with the console if the TV cannot pass controller input.</li>
+  </ul>
+  <p class="small">Compatibility is not guaranteed. Older webOS versions may not support the browser features or video codecs required by Xbox Remote Play. If the page stays blank or reports an unsupported browser, this TV may not be able to run the stream directly.</p>
+</main>
+<script>
+(function () {
+  var button = document.getElementById('start');
+  var status = document.getElementById('status');
+  function openRemotePlay() {
+    status.textContent = 'Opening Xbox Remote Play…';
+    window.location.href = 'https://www.xbox.com/remoteplay';
+  }
+  button.addEventListener('click', openRemotePlay);
+  button.addEventListener('keydown', function (event) {
+    if (event.key === 'Enter' || event.keyCode === 13 || event.keyCode === 32) {
+      event.preventDefault();
+      openRemotePlay();
+    }
+  });
+})();
+</script>
+</body>
+</html>
