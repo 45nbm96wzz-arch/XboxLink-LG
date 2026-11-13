@@ -18,7 +18,7 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
-          node-version: 24
+          node-version: 20
       - name: Install webOS CLI
         run: npm install --global @webos-tools/cli
       - name: Create app icon
@@ -36,8 +36,8 @@ jobs:
           PY
       - name: Package webOS app
         run: |
-          ares-config --profile tv
-          ares-package app --outdir dist
+          mkdir -p dist
+          ares-package -o dist app
       - uses: actions/upload-artifact@v4
         with:
           name: XboxLink-LG-IPK
